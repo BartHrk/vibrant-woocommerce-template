@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Theme setup and WooCommerce support
@@ -19,6 +20,9 @@ add_action('after_setup_theme', 'your_theme_setup');
  * Add Custom Product Tabs
  */
 function add_custom_product_tabs( $tabs ) {
+    // Remove the default reviews tab
+    unset($tabs['reviews']);
+
     // Add a custom specifications tab
     $tabs['specifications_tab'] = array(
         'title'    => __( 'Specifications', 'your-theme-textdomain' ),
@@ -31,6 +35,13 @@ function add_custom_product_tabs( $tabs ) {
         'title'    => __( 'Shipping', 'your-theme-textdomain' ),
         'priority' => 30,
         'callback' => 'custom_shipping_tab_content'
+    );
+
+    // Add your custom tab (previously reviews)
+    $tabs['custom_info_tab'] = array(
+        'title'    => __( 'Additional Info', 'your-theme-textdomain' ), // Change this title to whatever you want
+        'priority' => 40,
+        'callback' => 'custom_info_tab_content'
     );
 
     return $tabs;
@@ -54,6 +65,15 @@ function add_product_tabs_meta_boxes() {
         'shipping_tab_content',
         __( 'Shipping Tab Content', 'your-theme-textdomain' ),
         'shipping_tab_meta_box',
+        'product',
+        'normal',
+        'default'
+    );
+
+    add_meta_box(
+        'custom_info_tab_content',
+        __( 'Additional Info Tab Content', 'your-theme-textdomain' ), // Change this title to match your tab
+        'custom_info_tab_meta_box',
         'product',
         'normal',
         'default'
@@ -86,11 +106,22 @@ function shipping_tab_meta_box( $post ) {
     ) );
 }
 
+function custom_info_tab_meta_box( $post ) {
+    wp_nonce_field( 'save_custom_info_tab', 'custom_info_tab_nonce' );
+    $custom_info = get_post_meta( $post->ID, '_custom_info_tab_content', true );
+    wp_editor( $custom_info, 'custom_info_tab_content', array(
+        'textarea_name' => 'custom_info_tab_content',
+        'media_buttons' => true,
+        'tinymce'      => true,
+        'textarea_rows'=> 10
+    ) );
+}
+
 /**
  * Save Meta Box Content
  */
 function save_product_tabs_meta( $post_id ) {
-    // Check if our nonce is set and verify it
+    // Check if our nonces are set and verify them
     if ( !isset( $_POST['specifications_tab_nonce'] ) || 
          !wp_verify_nonce( $_POST['specifications_tab_nonce'], 'save_specifications_tab' ) ) {
         return;
@@ -98,6 +129,11 @@ function save_product_tabs_meta( $post_id ) {
 
     if ( !isset( $_POST['shipping_tab_nonce'] ) || 
          !wp_verify_nonce( $_POST['shipping_tab_nonce'], 'save_shipping_tab' ) ) {
+        return;
+    }
+
+    if ( !isset( $_POST['custom_info_tab_nonce'] ) || 
+         !wp_verify_nonce( $_POST['custom_info_tab_nonce'], 'save_custom_info_tab' ) ) {
         return;
     }
 
@@ -118,6 +154,15 @@ function save_product_tabs_meta( $post_id ) {
             wp_kses_post( $_POST['shipping_tab_content'] )
         );
     }
+
+    // Save custom info tab content
+    if ( isset( $_POST['custom_info_tab_content'] ) ) {
+        update_post_meta(
+            $post_id,
+            '_custom_info_tab_content',
+            wp_kses_post( $_POST['custom_info_tab_content'] )
+        );
+    }
 }
 add_action( 'save_post_product', 'save_product_tabs_meta' );
 
@@ -133,6 +178,12 @@ function custom_specifications_tab_content() {
 function custom_shipping_tab_content() {
     global $post;
     $content = get_post_meta( $post->ID, '_shipping_tab_content', true );
+    echo apply_filters( 'the_content', $content );
+}
+
+function custom_info_tab_content() {
+    global $post;
+    $content = get_post_meta( $post->ID, '_custom_info_tab_content', true );
     echo apply_filters( 'the_content', $content );
 }
 
