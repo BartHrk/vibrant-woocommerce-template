@@ -64,7 +64,7 @@ export const ProductInfo = ({
         <div className="flex items-center gap-2">
           {salePrice ? (
             <>
-              <span className="text-2xl font-bold text-primary">
+              <span className="text-2xl font-bold text-[#ea384c]">
                 ${salePrice}
               </span>
               <span className="text-lg text-muted-foreground line-through">
@@ -72,7 +72,7 @@ export const ProductInfo = ({
               </span>
             </>
           ) : (
-            <span className="text-2xl font-bold">${price}</span>
+            <span className="text-2xl font-bold text-[#ea384c]">${price}</span>
           )}
         </div>
       </div>
@@ -121,7 +121,7 @@ export const ProductInfo = ({
 
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium">Stock:</span>
-          <Badge variant={stock > 0 ? "default" : "destructive"}>
+          <Badge variant={stock > 0 ? "default" : "destructive"} className="text-black">
             {stock > 0 ? "In Stock" : "Out of Stock"}
           </Badge>
         </div>
