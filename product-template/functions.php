@@ -1,7 +1,23 @@
 
 <?php
 /**
- * Add this code to your theme's functions.php file
+ * Theme setup and WooCommerce support
+ */
+
+// Theme Setup Function
+function your_theme_setup() {
+    // Add WooCommerce support
+    add_theme_support('woocommerce');
+    
+    // Optional: Add support for WooCommerce features
+    add_theme_support('wc-product-gallery-zoom');
+    add_theme_support('wc-product-gallery-lightbox');
+    add_theme_support('wc-product-gallery-slider');
+}
+add_action('after_setup_theme', 'your_theme_setup');
+
+/**
+ * Product Gallery customization
  */
 
 // Enqueue product gallery scripts and styles
