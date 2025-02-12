@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { StarIcon } from "lucide-react";
@@ -34,7 +33,7 @@ export const ProductTabs = ({
       <TabsList className="w-full justify-start border-b rounded-none h-auto p-0 bg-transparent">
         <TabsTrigger
           value="description"
-          className={`tab-button text-black ${
+          className={`tab-button ${
             activeTab === "description" ? "active" : ""
           }`}
           onClick={() => setActiveTab("description")}
@@ -43,7 +42,7 @@ export const ProductTabs = ({
         </TabsTrigger>
         <TabsTrigger
           value="specifications"
-          className={`tab-button text-black ${
+          className={`tab-button ${
             activeTab === "specifications" ? "active" : ""
           }`}
           onClick={() => setActiveTab("specifications")}
@@ -52,18 +51,14 @@ export const ProductTabs = ({
         </TabsTrigger>
         <TabsTrigger
           value="reviews"
-          className={`tab-button text-black ${
-            activeTab === "reviews" ? "active" : ""
-          }`}
+          className={`tab-button ${activeTab === "reviews" ? "active" : ""}`}
           onClick={() => setActiveTab("reviews")}
         >
           Reviews ({reviews.length})
         </TabsTrigger>
         <TabsTrigger
           value="shipping"
-          className={`tab-button text-black ${
-            activeTab === "shipping" ? "active" : ""
-          }`}
+          className={`tab-button ${activeTab === "shipping" ? "active" : ""}`}
           onClick={() => setActiveTab("shipping")}
         >
           Shipping

@@ -121,7 +121,7 @@ export const ProductInfo = ({
 
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium">Stock:</span>
-          <Badge variant={stock > 0 ? "default" : "destructive"} className="text-black">
+          <Badge variant={stock > 0 ? "default" : "destructive"}>
             {stock > 0 ? "In Stock" : "Out of Stock"}
           </Badge>
         </div>
