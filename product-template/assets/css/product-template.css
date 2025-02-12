@@ -8,6 +8,12 @@
   --border: 240 5.9% 90%;
 }
 
+.container-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
 .product-gallery {
   position: relative;
   overflow: hidden;
