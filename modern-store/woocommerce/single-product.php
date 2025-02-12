@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 get_header('shop');
 ?>
 
-<div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 1rem;">
+<div class="container-wrapper" style="max-width: 1400px; margin: 0 auto; padding: 0 1rem;">
     <?php
         /**
          * woocommerce_before_main_content hook.
