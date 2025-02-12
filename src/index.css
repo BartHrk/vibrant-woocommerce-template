@@ -37,6 +37,12 @@
   }
 }
 
+@layer components {
+  .container-wrapper {
+    @apply max-w-[1400px] mx-auto px-4;
+  }
+}
+
 .product-gallery {
   @apply relative overflow-hidden rounded-lg;
 }
