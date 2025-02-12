@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Dialog } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Search, X } from "lucide-react";
 
@@ -77,12 +77,12 @@ export const ProductGallery = ({ images }: ProductGalleryProps) => {
       </div>
 
       <Dialog open={isLightboxOpen} onOpenChange={setIsLightboxOpen}>
-        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm">
-          <div className="fixed inset-0 flex items-center justify-center p-4">
+        <DialogContent className="max-w-screen-lg w-full p-0 border-none bg-transparent">
+          <div className="relative">
             <Button
               variant="outline"
               size="icon"
-              className="absolute top-4 right-4"
+              className="absolute top-4 right-4 z-50 bg-white/80 backdrop-blur-sm"
               onClick={() => setIsLightboxOpen(false)}
             >
               <X className="h-4 w-4" />
@@ -93,7 +93,7 @@ export const ProductGallery = ({ images }: ProductGalleryProps) => {
               className="max-w-full max-h-[90vh] rounded-lg"
             />
           </div>
-        </div>
+        </DialogContent>
       </Dialog>
     </div>
   );
