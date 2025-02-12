@@ -1,4 +1,3 @@
-
 <?php
 if (!defined('ABSPATH')) {
     exit;
@@ -29,6 +28,19 @@ function modern_store_setup() {
     ));
 }
 add_action('after_setup_theme', 'modern_store_setup');
+
+// Add custom CSS for container wrapper
+function add_container_wrapper_styles() {
+    $styles = "
+        .container-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+    ";
+    wp_add_inline_style('modern-store-style', $styles);
+}
+add_action('wp_enqueue_scripts', 'add_container_wrapper_styles');
 
 /** 
  * Add Custom Product Tabs 
